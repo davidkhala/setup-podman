@@ -1,14 +1,21 @@
-name: "davidkhala/new-action"
-description: 'new action description'
+name: "davidkhala/setup-podman"
+description: 'Setup Podman context'
 
 branding:
-  icon: 'package' # find one in https://haya14busa.github.io/github-action-brandings/
-  color: 'purple' # one of ["white", "yellow", "blue", "green", "orange", "red", "purple", "gray-dark"]
+  icon: 'package' 
+  color: 'purple' 
 
 runs:
   using: "composite"
   steps:
-  - if: ${{ inputs.tests != '' }}
-    run: echo tests
-    working-directory: ${{inputs.working-directory}}
+  - if: runner.os == 'Linux'
+    run: curl -sS https://raw.githubusercontent.com/davidkhala/setup-podman/refs/heads/main/ubuntu/setup.sh | bash 
+    shell: bash
+  - if: runner.os == 'macOS'
+    run: echo TODO
+    shell: bash
+  - if: runner.os == 'Windows'
+    run: echo TODO
+    shell: powershell
+  - run: podman machine init --user-mode-networking --now
     shell: bash
