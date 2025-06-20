@@ -1,0 +1,21 @@
+name: "davidkhala/new-action"
+description: 'new action description'
+
+branding:
+  icon: 'package' # find one in https://haya14busa.github.io/github-action-brandings/
+  color: 'purple' # one of ["white", "yellow", "blue", "green", "orange", "red", "purple", "gray-dark"]
+inputs:
+  tests:
+    description: 'Test Sources Root: working-directory of your tests'
+    required: false
+    default: tests
+  working-directory:
+    description: 'action run path'
+    required: true
+runs:
+  using: "composite"
+  steps:
+  - if: ${{ inputs.tests != '' }}
+    run: echo tests
+    working-directory: ${{inputs.working-directory}}
+    shell: bash
