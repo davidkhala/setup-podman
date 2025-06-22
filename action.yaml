@@ -15,7 +15,9 @@ runs:
     run: echo TODO
     shell: bash
   - if: runner.os == 'Windows'
-    run: echo TODO
+    run: |
+      Invoke-WebRequest -Uri https://github.com/containers/podman/releases/latest/download/podman-setup.exe -OutFile podman-setup.exe
+      Start-Process -FilePath ".\podman-setup.exe" -ArgumentList "/S" -Wait
     shell: powershell
   - run: podman machine init --user-mode-networking --now
     shell: bash
