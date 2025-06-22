@@ -1,23 +1,27 @@
 name: "davidkhala/setup-podman"
-description: 'Setup Podman context'
+description: "Setup Podman context"
 
 branding:
-  icon: 'package' 
-  color: 'purple' 
+  icon: "package"
+  color: "purple"
 
 runs:
   using: "composite"
   steps:
-  - if: runner.os == 'Linux'
-    run: curl -sS https://raw.githubusercontent.com/davidkhala/setup-podman/refs/heads/main/ubuntu/setup.sh | bash 
-    shell: bash
-  - if: runner.os == 'macOS'
-    run: echo TODO
-    shell: bash
-  - if: runner.os == 'Windows'
-    run: |
-      Invoke-WebRequest -Uri https://github.com/containers/podman/releases/latest/download/podman-setup.exe -OutFile podman-setup.exe
-      Start-Process -FilePath ".\podman-setup.exe" -ArgumentList "/S" -Wait
-    shell: powershell
-  - run: podman machine init --user-mode-networking --now
-    shell: bash
+    - if: runner.os == 'Linux'
+      run: curl -sS https://raw.githubusercontent.com/davidkhala/setup-podman/refs/heads/main/ubuntu/setup.sh | bash
+      shell: bash
+    - if: runner.os == 'Windows'
+      run: |
+        Invoke-WebRequest -Uri https://github.com/containers/podman/releases/download/v5.5.1/podman-5.5.1-setup.exe -OutFile podman-setup.exe
+        Start-Process -FilePath ".\podman-setup.exe" -ArgumentList "/S" -Wait
+      shell: powershell
+    - if: runner.os == 'Windows'
+      run: podman machine init --user-mode-networking --now
+      shell: powershell
+    - if: runner.os != 'Windows'
+      # TODO debug
+      run: |
+        cat /usr/bin/qemu-system-x86_64
+        podman machine init --user-mode-networking --now
+      shell: bash
