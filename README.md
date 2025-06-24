@@ -3,6 +3,8 @@
 Setup Podman context. It will
 
 - create and start a Podman machine
+- install plugins for
+  - network: `bridge`
 
 ## Limit
 

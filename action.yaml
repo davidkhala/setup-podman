@@ -17,4 +17,5 @@ runs:
       run: |
         iex (iwr 'https://raw.githubusercontent.com/davidkhala/setup-podman/refs/heads/main/windows/setup.ps1').Content
         'C:\Program Files\RedHat\Podman' | Out-File -FilePath $env:GITHUB_PATH -Append
+        echo "CNI_PATH=${{ github.workspace }}\\cni-bin" >> $env:GITHUB_ENV
       shell: powershell
