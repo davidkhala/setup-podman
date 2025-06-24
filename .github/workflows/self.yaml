@@ -10,6 +10,9 @@ jobs:
         - uses: actions/checkout@main
         - uses: ./
         - run: podman context ls
-          
+        - if: runner.os == 'Linux'
+          run: ls /opt/cni/bin # validate network plugins are installed
+        - if: runner.os == 'Windows'
+          run:  podman image pull postgres
         
     
