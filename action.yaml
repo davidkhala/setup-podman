@@ -8,7 +8,7 @@ inputs:
   socket:
     description: "Choose how to provide podman socket to the ubuntu-latest runner. Options: ['systemctl', 'podman-machine']"
     required: false
-    default: "systemctl" # 'podman-machine' option is slower
+    default: "systemctl"
 runs:
   using: "composite"
   steps:

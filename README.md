@@ -6,6 +6,15 @@ Setup Podman context. It will
 - install plugins for
   - network: `bridge`
 
+## Usage
+
+```yaml
+- uses: davidkhala/setup-podman@main
+  with:
+    # 'podman-machine' option create and start a podman machine in ubuntu-latest. It takes time (~8 mins). 
+    socket: 'podman-machine'
+```
+
 ## Limit
 
 `macos-latest` is not supported
