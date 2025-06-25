@@ -4,14 +4,24 @@ description: "Setup Podman context"
 branding:
   icon: "package"
   color: "purple"
-
+inputs:
+  socket:
+    description: "Choose how to provide podman socket to the ubuntu-latest runner. Options: ['systemctl', 'podman-machine']"
+    required: false
+    default: "systemctl" # 'podman-machine' option is slower
 runs:
   using: "composite"
   steps:
-    - if: runner.os == 'Linux'
+    - if: runner.os == 'Linux' && inputs.socket == 'podman-machine'
       run: |
         curl -sS https://raw.githubusercontent.com/davidkhala/setup-podman/refs/heads/main/ubuntu/setup.sh | bash
         podman machine init --user-mode-networking --now
+      shell: bash
+    - if: runner.os == 'Linux' && inputs.socket == 'systemctl'
+      run: |
+        sudo apt -qq update
+        sudo apt install -y -qq containernetworking-plugins
+        systemctl --user enable --now podman.socket
       shell: bash
     - if: runner.os == 'Windows'
       run: |

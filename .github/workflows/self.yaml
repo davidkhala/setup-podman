@@ -1,18 +1,24 @@
 name: self reference
 on: push
 jobs:
-    use:
-        strategy:
-            matrix:
-                os: [ubuntu-latest, windows-latest]
-        runs-on: ${{ matrix.os }}
+    windows:
+        runs-on: windows-latest
         steps:
         - uses: actions/checkout@main
         - uses: ./
         - run: podman context ls
-        - if: runner.os == 'Linux'
-          run: ls /opt/cni/bin # validate network plugins are installed
-        - if: runner.os == 'Windows'
-          run:  podman image pull postgres
-        
+        - run: podman image pull postgres
+    ubuntu:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                socket: [systemctl, podman-machine]
+        steps:
+        - uses: actions/checkout@main
+        - uses: ./
+          with:
+            socket: ${{ matrix.socket }}
+        - run: podman image pull postgres
+        - run: ls /opt/cni/bin # validate network plugins are installed
+            
     
