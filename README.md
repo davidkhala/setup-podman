@@ -7,11 +7,12 @@ Setup Podman context. It will
   - network: `bridge`
 
 ## Usage
-
 ```yaml
 - uses: davidkhala/setup-podman@main
   with:
-    # 'podman-machine' option create and start a podman machine in ubuntu-latest. It takes time (~8 mins). 
+    # socket: Choose how to provide podman socket if runs on ubuntu-latest runner. Options: ['systemctl', 'podman-machine']
+    #   'systemctl': default option. It provides podman API by systemctl 
+    #   'podman-machine': Create and start a podman machine in ubuntu-latest. It takes time (~8 mins). 
     socket: 'podman-machine'
 ```
 
